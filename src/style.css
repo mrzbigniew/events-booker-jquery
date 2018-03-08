@@ -1,0 +1,245 @@
+H1 {
+	font-weight: bold;
+	font-size: 18pt;
+	line-height: 18pt;
+	font-family: arial,helvetica;
+	font-variant: normal;
+	font-style: normal;
+}
+BODY {
+	color: black;
+	background-color: white;
+	background: url("/http-header/background.jpg") repeat-x;
+  }
+
+
+body {
+	font-family: Verdana; 
+	font-size: 8pt; 
+	TEXT-DECORATION: none;
+}
+
+a {
+	color: #000000; font-weight: normal; text-decoration: none;
+}
+a:link {
+	COLOR: #76857E; TEXT-DECORATION: none;  font-family: Verdana; font-size: 8pkt;
+}
+a:visited {
+	font-family: Verdana; font-size: 8pkt; COLOR: #76857E; TEXT-DECORATION: none;
+}
+a:hover {
+	font-family: Verdana; font-size: 8pkt; COLOR: #94A397; TEXT-DECORATION: none;
+}
+
+hr {
+	color: #CDD0CD; height: 1px; border: 0;
+}
+
+::-webkit-input-placeholder {
+	/* Chrome/Opera/Safari */
+	color: lightgray;
+}
+
+::-moz-placeholder {
+	/* Firefox 19+ */
+	color: lightgray;
+}
+
+:-ms-input-placeholder {
+	/* IE 10+ */
+	color: lightgray;
+}
+
+:-moz-placeholder {
+	/* Firefox 18- */
+	color: lightgray;
+}
+
+/* texarea customer */
+
+.text_customer {
+	background-color: gray;
+	color: black;
+	padding-left: 7px;
+	width: 100%;
+	font-size: 15px;
+}
+
+.tear_c {
+	overflow: hidden;
+	resize: none;
+	outline: none;
+}
+
+.wrapper {
+	overflow-x: auto;
+	white-space: no-wrap;
+}
+
+.td {
+	display: table-cell;
+}
+
+.box {
+	margin: 5px;
+	width: 30px;
+	height: 60px;
+	padding: 0px;
+	border: 10px;
+	color: white;
+}
+
+.box_hotel_header {
+	margin: 2px;
+	width: 60px;
+	height: 60px;
+	padding: 0px;
+	color: white;
+}
+
+.box_hotel_content {
+	margin: 5px;
+	width: 80px;
+	height: 50px;
+	padding: 0px;
+	color: white;
+}
+
+.box_hotel_content_first {
+	margin: 0px;
+	width: 55px;
+	height: 50px;
+	padding: 0px;
+	color: white;
+}
+
+.event_area {
+	background-color: #0d0d0d;
+	border: 1px solid #b7b7b7;
+	-webkit-border-radius: 6px;
+	border-radius: 6px;
+	padding: 10px;
+}
+
+.kr {
+	display: inline-block;
+	-webkit-box-sizing: content-box;
+	-moz-box-sizing: content-box;
+	box-sizing: content-box;
+	padding: 7px;
+	-webkit-border-radius: 6px;
+	border-radius: 6px;
+	font: normal normal bold 15px/normal "Lucida Console", Monaco, monospace;
+	text-align: center;
+	-o-text-overflow: clip;
+	text-overflow: clip;
+	-webkit-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+	-moz-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+	-o-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+	transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+	cursor: pointer;
+}
+
+.kr-on {
+	background-color: #3d3d3d;
+	border: 2px solid #b7b7b7;
+	color: #FFFFFF;
+}
+
+.kr-off {
+	background-color: #383838;
+	border: 1px solid black;
+	color: #707070;
+}
+
+.kr-green {
+	background-color: #20db00;
+	/*border: 2px solid #48ff28;*/
+	border: 2px solid #FFFFFF;
+	color: #707070;
+}
+
+.cart_num {
+	display: inline;
+	padding: 1px;
+	border: 1px solid #b7b7b7;
+	width: 50px;
+	height: 30px;
+	margin: 12px;
+	/*-webkit-border-radius: 6px;
+border-radius: 6px;*/
+	font: normal normal bold 15px/normal "Tahoma", Monaco, monospace;
+	color: rgba(255, 255, 255, 1);
+	text-align: center;
+	-o-text-overflow: clip;
+	text-overflow: clip;
+	background: rgba(106, 106, 106, 1);
+}
+
+.cartHeadContent {
+	color: white;
+	font-size: 1.5em;
+}
+
+.radius {
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
+
+.CartContentRow {
+	border: 12px;
+	padding: 10px;
+	background-color: black;
+	margin-bottom: 5px;
+	margin-top: 5px;
+}
+
+::-webkit-scrollbar {
+	width: 8px;
+	height: 8px;
+}
+
+::-webkit-scrollbar-button {
+	width: 48px;
+	height: 48px;
+}
+
+::-webkit-scrollbar-thumb {
+	background: #c5c7c7;
+	border: 0px none #ffffff;
+	border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background: orange;
+}
+
+::-webkit-scrollbar-thumb:active {
+	background: red;
+}
+
+::-webkit-scrollbar-track {
+	background: #5d5d5d;
+	border: 0px none #ffffff;
+	border-radius: 3px;
+}
+
+::-webkit-scrollbar-track:hover {
+	background: lightgrey;
+}
+
+::-webkit-scrollbar-track:active {
+	background: #ffffff;
+}
+
+::-webkit-scrollbar-corner {
+	background: transparent;
+}
+
+.karta {
+	background-color: #303030;
+	height: auto;
+	padding: 10px;
+}
