@@ -27,7 +27,7 @@
     }
 
     this.getItemsCount = function () {
-      return item.length;
+      return items.length;
     }
 
     function linkItems($item, $basketItem) {
@@ -501,12 +501,12 @@
     function validEmailField() {
       var $field = $self.find('textarea[name="email"]');
       var value = $field.val();
-      var regExp = /^[a-zA-Z0-9][\w\.]+@[\w\.]+\.[\w]+/g;
+      var regExp = /^[a-zA-Z0-9][\w\.]?@[\w\.]+\.[\w]+/g;
       return regExp.test(value);
     }
 
     function isBasketEmpty() {
-      return this.basket.getItemsCount() > 0;
+      return $basket.getItemsCount() === 0;
     }
 
     function handleFormChange() {
