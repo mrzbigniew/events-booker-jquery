@@ -499,9 +499,9 @@
     }
 
     function validEmailField() {
-      var $field = $self.find('textarea[name="email"]');
-      var value = $field.val();
-      var regExp = /^[a-zA-Z0-9][\w\.]?@[\w\.]+\.[\w]+/g;
+      var $field = $self.find('textarea[name="email"]'),
+          value = $field.val(),
+          regExp = /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/g;  
       return regExp.test(value);
     }
 
