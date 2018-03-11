@@ -26,6 +26,10 @@
       }
     }
 
+    this.getAllItems = function() {
+      return items;
+    }
+
     this.getItemsCount = function () {
       return items.length;
     }
@@ -389,12 +393,12 @@
 
       var $textareaContent = $('<textarea placeholder="notatka" class="tear_c text_customer radius tAreaComment"/>');
       $textareaContent.change(function () {
-          if ($textareaContent.val() === '') {
-            $commentIcon.removeClass('fa-commenting').addClass('fa-commenting-o');
-          } else {
-            $commentIcon.removeClass('fa-commenting-o').addClass('fa-commenting');
-          }
-        })
+        if ($textareaContent.val() === '') {
+          $commentIcon.removeClass('fa-commenting').addClass('fa-commenting-o');
+        } else {
+          $commentIcon.removeClass('fa-commenting-o').addClass('fa-commenting');
+        }
+      })
       $textareaContent.appendTo($noteContainer);
 
       $inputField.change(function (event) {
@@ -500,8 +504,8 @@
 
     function validEmailField() {
       var $field = $self.find('textarea[name="email"]'),
-          value = $field.val(),
-          regExp = /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/g;  
+        value = $field.val(),
+        regExp = /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/g;
       return regExp.test(value);
     }
 
@@ -524,8 +528,44 @@
       });
     }
 
+    function addSaveButtonEvent() {
+      $('.save-button').click(function () {
+        $saveButton = $(this);
+        if ($saveButton.prop('disabled')) {
+          return false;
+        }
+        saveBasket();
+      });
+    }
+
+    function saveBasket() {
+      var items = $basket.getAllItems(),
+        item = null,
+        dataToSend = [];
+      for (var index = 0; index < items.length; index++) {
+        item = items[index].item;
+        dataToSend.push(item.data());
+      }
+      $.post({
+          url: '/',
+          data: JSON.stringify(dataToSend),
+          success: doAfterSuccessfulBasketSave,
+          error: doAfterFailSave,
+          dataType: 'json'
+      });
+    }
+
+    function doAfterFailSave(err) {
+      console.log(err);
+    }
+
+    function doAfterSuccessfulBasketSave(data) {
+      console.log(data);
+    }
+
     initItems();
     addLWEvent();
+    addSaveButtonEvent();
     disableSaveButton();
     addBasketClientDataEvents();
 
