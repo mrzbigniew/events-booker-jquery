@@ -26,7 +26,7 @@
       }
     }
 
-    this.getAllItems = function() {
+    this.getAllItems = function () {
       return items;
     }
 
@@ -546,13 +546,12 @@
         item = items[index].item;
         dataToSend.push(item.data());
       }
-      $.post({
-          url: '/',
-          data: JSON.stringify(dataToSend),
-          success: doAfterSuccessfulBasketSave,
-          error: doAfterFailSave,
-          dataType: 'json'
-      });
+      $.post('', JSON.stringify(dataToSend.map((item) => {
+        item.date = item.date.getTime() / 1000;
+        return item;
+      })))
+        .done(doAfterSuccessfulBasketSave)
+        .fail(doAfterFailSave);
     }
 
     function doAfterFailSave(err) {
