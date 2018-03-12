@@ -515,7 +515,7 @@
 
     function handleFormChange() {
       //var itemsNameList = ['customer', 'kontakt', 'email'];
-      if (validCustomerField() && validContactField() && validEmailField() && !isBasketEmpty()) {
+      if (validCustomerField() && validContactField() && !isBasketEmpty()) {
         enableSaveButton();
       } else {
         disableSaveButton();
