@@ -1,4 +1,3 @@
-
 (function ($) {
   $.fn.basket = function (conf) {
     var $self = this,
@@ -13,6 +12,7 @@
       addBasketItemToContainer($basketItem);
       runBasketItemShowAnimation($basketItem);
       linkItems($item, $basketItem);
+      emitBasketChangeEvent();
     }
 
     this.deleteItem = function ($item) {
@@ -24,6 +24,7 @@
           delBasketItemFromContainer($basketItem);
         });
       }
+      emitBasketChangeEvent();
     }
 
     this.getAllItems = function () {
@@ -39,6 +40,10 @@
         basketItem: $basketItem,
         item: $item
       });
+    }
+
+    function emitBasketChangeEvent() {
+      $self.trigger('basketchange');
     }
 
     function fetchLinkedDataForItem($item) {
@@ -227,6 +232,7 @@
       if (checkChangeInputValue($item, newInputValue)) {
         updateInputValue($item, newInputValue);
         updateOrderValue($item, orderValue);
+        emitBasketChange()
       }
     }
 
@@ -407,6 +413,11 @@
           newInputValue = +(data.value || 0) + fieldValue,
           orderValue;
 
+        if (fieldValue <= 0) {
+          $(this).val(1);
+          return;
+        }
+
         if (data.type === 'hotel_room' || !checkChangeInputValue($item, newInputValue)) {
           orderValue = + (data.orderValue || 0);
           $(this).val(orderValue);
@@ -513,7 +524,7 @@
       return $basket.getItemsCount() === 0;
     }
 
-    function handleFormChange() {
+    function setSaveButtonStatus() {
       //var itemsNameList = ['customer', 'kontakt', 'email'];
       if (validCustomerField() && validContactField() && !isBasketEmpty()) {
         enableSaveButton();
@@ -522,9 +533,15 @@
       }
     }
 
-    function addBasketClientDataEvents() {
+    function addFormListener() {
       $('.cart_header > textarea').on('change keyup', function (event) {
-        handleFormChange();
+        setSaveButtonStatus();
+      });
+    }
+
+    function addBasketListener() {
+      $basket.on('basketchange', function () {
+        setSaveButtonStatus();
       });
     }
 
@@ -544,13 +561,22 @@
         dataToSend = [];
       for (var index = 0; index < items.length; index++) {
         item = items[index].item;
-        dataToSend.push(item.data());
+        dataToSend.push(Object.assign({}, item.data()));
       }
-      $.post('', JSON.stringify(dataToSend.map((item) => {
-        item.date = item.date.getTime() / 1000;
-        return item;
-      })))
-        .done(doAfterSuccessfulBasketSave)
+
+      dataToSend.forEach((current) => {
+        current.date = current.date.getTime() / 1000;
+      });
+
+      $.ajax({
+        url: './save.php',
+        type: 'POST',
+        async: true,
+        data: JSON.stringify(dataToSend),
+        contentType: 'application/json; charset=UTF-8',
+        dataType: 'json',
+
+      }).done(doAfterSuccessfulBasketSave)
         .fail(doAfterFailSave);
     }
 
@@ -561,12 +587,17 @@
     function doAfterSuccessfulBasketSave(data) {
       console.log(data);
     }
+    
+    function emitBasketChange() {
+      $basket.trigger('basketchange');
+    }
 
     initItems();
     addLWEvent();
     addSaveButtonEvent();
     disableSaveButton();
-    addBasketClientDataEvents();
+    addFormListener();
+    addBasketListener();
 
     return this;
   }
