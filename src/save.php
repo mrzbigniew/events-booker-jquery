@@ -4,5 +4,5 @@ $data = file_get_contents('php://input');
 $objData = json_decode($data);
 
 foreach($objData as $obj) {
-    
+    var_dump($obj);
 }
