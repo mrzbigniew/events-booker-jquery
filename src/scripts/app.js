@@ -555,28 +555,33 @@
       });
     }
 
-    function saveBasket() {
-      var items = $basket.getAllItems(),
-        item = null,
-        dataToSend = [];
-      for (var index = 0; index < items.length; index++) {
-        item = items[index].item;
-        dataToSend.push(Object.assign({}, item.data()));
-      }
+    function getFormData() {
+      var data = {};
+      $('.cart_header > textarea[name]').each(function () {
+        $current = $(this);
+        data[$current.attr('name')] = $current.val();
+      })
+      return data;
+    }
 
-      dataToSend.forEach((current) => {
-        current.date = current.date.getTime() / 1000;
+    function getBasketData() {
+      var items = $basket.getAllItems();
+      return items.map(function (current) {
+        var data = Object.assign({}, current.item.data());
+        data.date = data.date.getTime() / 1000;
+        return data;
       });
+    }
 
-      $.ajax({
-        url: './save.php',
-        type: 'POST',
-        async: true,
-        data: JSON.stringify(dataToSend),
-        contentType: 'application/json; charset=UTF-8',
-        dataType: 'json',
-
-      }).done(doAfterSuccessfulBasketSave)
+    function saveBasket() {
+      var dataToSend = getFormData(),
+        basketData = {
+          data: getBasketData()
+        }
+      dataToSend = Object.assign(dataToSend, basketData);
+      
+      $.post('save.php', dataToSend)
+        .done(doAfterSuccessfulBasketSave)
         .fail(doAfterFailSave);
     }
 
@@ -587,7 +592,7 @@
     function doAfterSuccessfulBasketSave(data) {
       console.log(data);
     }
-    
+
     function emitBasketChange() {
       $basket.trigger('basketchange');
     }
