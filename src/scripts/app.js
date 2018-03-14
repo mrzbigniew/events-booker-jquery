@@ -580,7 +580,9 @@
         }
       dataToSend = Object.assign(dataToSend, basketData);
       
-      $.post('save.php', dataToSend);
+      $.post('save.php', dataToSend)
+        .done(doAfterSuccessfulBasketSave)
+        .fail(doAfterFailSave);
     }
 
     function doAfterFailSave(err) {
