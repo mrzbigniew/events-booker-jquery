@@ -443,7 +443,7 @@
 
     function _dataStandardizer(data) {
       var ret = {},
-        standardKeysInOrder = ['_id', 'event_id', 'id', 'type', 'title', 'name', 'date', 'value', 'orderValue', 'max'],
+        standardKeysInOrder = ['_id', 'event_id', 'id', 'type', 'title', 'name', 'date', 'value', 'orderValue', 'max', 'note'],
         dataType = data.type,
         dataKey,
         valKey,
@@ -460,7 +460,7 @@
             function (data) {
               return parseInt(data.value || 0, 10) - parseInt(data.uexists || 0, 10);
             },
-            'uexists', 'umax'
+            'uexists', 'umax', 'note'
           ],
           'hotel_room': [
             '_id', 'event_id', null, 'type', 'event_name',
@@ -474,7 +474,7 @@
             function (data) {
               return parseInt(data.value || 0, 10) - parseInt(data.uexists || 0, 10);
             },
-            'uexists', 'roommax'
+            'uexists', 'roommax', 'note'
           ],
           'hotel_data': [
             '_id', 'event_id', null, 'type', 'event_name', null,
@@ -484,7 +484,7 @@
             function (data) {
               return parseInt(data.value || 0, 10) - parseInt(data.uexists || 0, 10);
             },
-            null, null
+            null, null, null
           ]
         };
 
