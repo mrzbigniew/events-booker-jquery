@@ -491,9 +491,9 @@
       for (i = 0; i < standardKeysInOrder.length; i++) {
         dataKey = standardKeysInOrder[i];
         valKey = map[dataType][i];
-        dataValue = valKey ? (typeof valKey === 'function' ? valKey(data) : data[valKey]) : null;
+        dataValue = valKey ? (typeof valKey === 'function' ? valKey(data) : (data[valKey] || null)) : null;
 
-        ret[standardKeysInOrder[i]] = dataValue;
+        ret[dataKey] = dataValue;
       }
       return ret;
     }
