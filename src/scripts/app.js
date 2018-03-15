@@ -398,7 +398,10 @@
         .appendTo($container);
 
       var $textareaContent = $('<textarea placeholder="notatka" class="tear_c text_customer radius tAreaComment"/>');
+      $textareaContent.val(data.note);
+
       $textareaContent.change(function () {
+        $item.data('note', $textareaContent.val());
         if ($textareaContent.val() === '') {
           $commentIcon.removeClass('fa-commenting').addClass('fa-commenting-o');
         } else {
@@ -579,7 +582,7 @@
           data: getBasketData()
         }
       dataToSend = Object.assign(dataToSend, basketData);
-      
+
       $.post('save.php', dataToSend)
         .done(doAfterSuccessfulBasketSave)
         .fail(doAfterFailSave);
