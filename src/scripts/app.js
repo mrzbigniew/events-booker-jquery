@@ -398,7 +398,10 @@
         .appendTo($container);
 
       var $textareaContent = $('<textarea placeholder="notatka" class="tear_c text_customer radius tAreaComment"/>');
+      $textareaContent.val(data.note);
+
       $textareaContent.change(function () {
+        $item.data('note', $textareaContent.val());
         if ($textareaContent.val() === '') {
           $commentIcon.removeClass('fa-commenting').addClass('fa-commenting-o');
         } else {
@@ -440,7 +443,7 @@
 
     function _dataStandardizer(data) {
       var ret = {},
-        standardKeysInOrder = ['_id', 'event_id', 'id', 'type', 'title', 'name', 'date', 'value', 'orderValue', 'max'],
+        standardKeysInOrder = ['_id', 'event_id', 'id', 'type', 'title', 'name', 'date', 'value', 'orderValue', 'max', 'note'],
         dataType = data.type,
         dataKey,
         valKey,
@@ -457,7 +460,7 @@
             function (data) {
               return parseInt(data.value || 0, 10) - parseInt(data.uexists || 0, 10);
             },
-            'uexists', 'umax'
+            'uexists', 'umax', 'note'
           ],
           'hotel_room': [
             '_id', 'event_id', null, 'type', 'event_name',
@@ -471,7 +474,7 @@
             function (data) {
               return parseInt(data.value || 0, 10) - parseInt(data.uexists || 0, 10);
             },
-            'uexists', 'roommax'
+            'uexists', 'roommax', 'note'
           ],
           'hotel_data': [
             '_id', 'event_id', null, 'type', 'event_name', null,
@@ -481,16 +484,16 @@
             function (data) {
               return parseInt(data.value || 0, 10) - parseInt(data.uexists || 0, 10);
             },
-            null, null
+            null, null, null
           ]
         };
 
       for (i = 0; i < standardKeysInOrder.length; i++) {
         dataKey = standardKeysInOrder[i];
         valKey = map[dataType][i];
-        dataValue = valKey ? (typeof valKey === 'function' ? valKey(data) : data[valKey]) : null;
+        dataValue = valKey ? (typeof valKey === 'function' ? valKey(data) : (data[valKey] || null)) : null;
 
-        ret[standardKeysInOrder[i]] = dataValue;
+        ret[dataKey] = dataValue;
       }
       return ret;
     }
@@ -579,7 +582,6 @@
           data: getBasketData()
         }
       dataToSend = Object.assign(dataToSend, basketData);
-      
       $.post('save.php', dataToSend)
         .done(doAfterSuccessfulBasketSave)
         .fail(doAfterFailSave);
