@@ -582,7 +582,6 @@
           data: getBasketData()
         }
       dataToSend = Object.assign(dataToSend, basketData);
-
       $.post('save.php', dataToSend)
         .done(doAfterSuccessfulBasketSave)
         .fail(doAfterFailSave);
