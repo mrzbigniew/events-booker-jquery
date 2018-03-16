@@ -564,6 +564,7 @@
         $current = $(this);
         data[$current.attr('name')] = $current.val();
       })
+      Object.assign(data, $lwField.data());
       return data;
     }
 
