@@ -162,6 +162,30 @@
       });
     }
 
+    function initAddAllRoomsButton() {
+      function generateAddAllRoomsButton() {
+        var $button = $('<button/>', {
+          text: 'all'
+        });
+        $button.addClass('btn btn-primary');
+  
+        return $button;
+      };
+
+      $('.wrapper.rooms').each(function(index, item) {
+        var $wrapper = $(item);
+        var $button = generateAddAllRoomsButton();
+        var $div = $('<div/>');
+        $div.append($button);
+        $wrapper.find('.box_hotel_content_first').first().append($button);
+        $button.click(function() {
+          $wrapper.find('.box_hotel_content > ' + conf.itemsSelector).each(function (index, input) {
+            $(input).val() ? null : $(input).trigger('click');
+          });
+        });
+      });
+    }
+
     function standardizeData($item) {
       var data = $item.data(),
         kay;
@@ -388,7 +412,7 @@
       var $inputField = $('<input />').attr('type', 'number')
         .attr('name', '')
         .val(data.orderValue)
-        .addClass('cart_num form-control')
+        .addClass('cart_num')
         .appendTo($container)
         .prop('disabled', data.type === 'hotel_room');
 
@@ -583,7 +607,7 @@
           data: getBasketData()
         }
       dataToSend = Object.assign(dataToSend, basketData);
-      $.post('save.php', dataToSend)
+      $.post ( b_url + '/book/json' , JSON.stringify(dataToSend) )
         .done(doAfterSuccessfulBasketSave)
         .fail(doAfterFailSave);
     }
@@ -594,6 +618,7 @@
 
     function doAfterSuccessfulBasketSave(data) {
       console.log(data);
+      location.replace(b_url);
     }
 
     function emitBasketChange() {
@@ -601,6 +626,7 @@
     }
 
     initItems();
+    initAddAllRoomsButton();
     addLWEvent();
     addSaveButtonEvent();
     disableSaveButton();
