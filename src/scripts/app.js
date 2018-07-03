@@ -170,7 +170,7 @@
             mode: 'select'
           },
           'class': 'btn btn-primary btn-sm all_opened',
-          text: 'wszystkie otwarte'
+          text: 'zaznacz wszystkie otwarte'
         });
 
         return $button;
@@ -193,6 +193,7 @@
             }
           });
           $button.data('mode', mode === 'select' ? 'deselect' : 'select');
+          $button.text(mode === 'select' ? 'odznacz wszystkie otwarte' : 'zaznacz wszystkie otwarte');
         });
 
         $wrapper.find('h5').first().append($('<div />').append($button));
