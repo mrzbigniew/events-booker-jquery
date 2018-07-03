@@ -3,8 +3,7 @@
     var $self = this,
       items = [],
       itemBuilder = conf.itemBuilder,
-      dataNormalizer = conf.dataNormalizer
-      ;
+      dataNormalizer = conf.dataNormalizer;
 
     this.addItem = function ($item) {
       var $basketItem = itemBuilder($item, dataNormalizer);
@@ -98,7 +97,9 @@
         'event_time': [],
         'hotel_data': []
       },
-      config = conf || { itemsSelector: 'input[order-item]' },
+      config = conf || {
+        itemsSelector: 'input[order-item]'
+      },
       basketSelector = conf.basketSelector || '.cart_content',
       handleClick = _handleItemClick,
       dataStandardizer = _dataStandardizer,
@@ -162,26 +163,61 @@
       });
     }
 
+    function initAddAllAttractionRoomsButton() {
+      function genButton() {
+        var $button = $('<button />', {
+          data: {
+            mode: 'select'
+          },
+          'class': 'btn btn-primary btn-sm all_opened',
+          text: 'wszystkie otwarte'
+        });
+
+        return $button;
+      }
+
+      $('.event_hotel').each(function (index, item) {
+        var $wrapper = $(item);
+        var $button = genButton();
+
+        $button.click(function () {
+          var mode = $button.data('mode');
+          $wrapper.find('.add_all').each(function (index, currentButton) {
+            $currentButton = $(currentButton);
+            $currentButton.data('mode', mode);
+            $currentButton.trigger('click');
+          });
+          $button.data('mode', mode === 'select' ? 'deselect' : 'select');
+        });
+
+        $wrapper.find('h5').first().append($('<div />').append($button));
+      });
+    }
+
     function initAddAllRoomsButton() {
       function generateAddAllRoomsButton() {
         var $button = $('<button/>', {
           text: 'all'
         });
-        $button.addClass('btn btn-primary');
-  
+        $button.addClass('btn btn-primary add_all');
+
         return $button;
       };
 
-      $('.wrapper.rooms').each(function(index, item) {
+      $('.wrapper.rooms').each(function (index, item) {
         var $wrapper = $(item);
         var $button = generateAddAllRoomsButton();
         var $div = $('<div/>');
         $div.append($button);
+        $button.data('mode', 'select');
         $wrapper.find('.box_hotel_content_first').first().append($button);
-        $button.click(function() {
+        $button.click(function () {
+          var mode = $button.data('mode');
           $wrapper.find('.box_hotel_content > ' + conf.itemsSelector).each(function (index, input) {
-            $(input).val() ? null : $(input).trigger('click');
+            var $input = $(input);
+            ((!$input.val() && mode === 'select') || ($input.val() && mode === 'deselect')) ? $input.trigger('click'): null;
           });
+          $button.data('mode', mode === 'select' ? 'deselect' : 'select');
         });
       });
     }
@@ -221,12 +257,11 @@
         for (index = 0; index < events.length; index++) {
           $item = events[index];
           itemData = $item.data();
-          max = + (itemData.max || 0);
+          max = +(itemData.max || 0);
           valueToCheck = +(itemData.value || 0) + lwValue;
           if (valueToCheck > max) {
             $item.addClass('kr-off').removeClass('kr-on');
-          }
-          else {
+          } else {
             $item.addClass('kr-on').removeClass('kr-off');
           }
         }
@@ -239,8 +274,8 @@
 
     function checkChangeInputValue($item, newValue) {
       var data = $item.data(),
-        max = + (data.max || 0),
-        min = + (data.value || 0),
+        max = +(data.max || 0),
+        min = +(data.value || 0),
         initialValue = +(data.value || 0),
         newInputValue = newValue;
       if (newValue > max || newValue < min) {
@@ -289,7 +324,7 @@
         $hotelDataItem = getHotelDataItemForHotelRoom($item),
         inputValue = +(data.max || 0),
         orderValue = inputValue,
-        hotelDataValue = + ($hotelDataItem.val() || 0) + orderValue;
+        hotelDataValue = +($hotelDataItem.val() || 0) + orderValue;
 
       if (data.value) {
         return; // prevent from booking room when room is booked already
@@ -446,7 +481,7 @@
         }
 
         if (data.type === 'hotel_room' || !checkChangeInputValue($item, newInputValue)) {
-          orderValue = + (data.orderValue || 0);
+          orderValue = +(data.orderValue || 0);
           $(this).val(orderValue);
         } else {
           changeItemValue($item, +$(this).val());
@@ -607,7 +642,7 @@
           data: getBasketData()
         }
       dataToSend = Object.assign(dataToSend, basketData);
-      $.post ( b_url + '/book/json' , JSON.stringify(dataToSend) )
+      $.post(b_url + '/book/json', JSON.stringify(dataToSend))
         .done(doAfterSuccessfulBasketSave)
         .fail(doAfterFailSave);
     }
@@ -626,6 +661,7 @@
     }
 
     initItems();
+    initAddAllAttractionRoomsButton();
     initAddAllRoomsButton();
     addLWEvent();
     addSaveButtonEvent();
