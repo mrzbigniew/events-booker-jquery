@@ -182,10 +182,15 @@
 
         $button.click(function () {
           var mode = $button.data('mode');
-          $wrapper.find('.add_all').each(function (index, currentButton) {
-            $currentButton = $(currentButton);
-            $currentButton.data('mode', mode);
-            $currentButton.trigger('click');
+          $wrapper.find('.wrapper.rooms').each(function (currentRoomsWrapperIdx, currentRoomsWrapper) {
+            $currentRoomsWrapper = $(currentRoomsWrapper);
+            if ($currentRoomsWrapper.css('display') === 'block') {
+              $currentRoomsWrapper.find('.add_all').each(function (currentButtonIndex, currentButton) {
+                $currentButton = $(currentButton);
+                $currentButton.data('mode', mode);
+                $currentButton.trigger('click');
+              });
+            }
           });
           $button.data('mode', mode === 'select' ? 'deselect' : 'select');
         });
