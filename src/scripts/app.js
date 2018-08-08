@@ -438,6 +438,7 @@
       $container.append('&nbsp;');
 
       var $comment = $('<span />')
+        .val(data.note || '')
         .addClass('comment')
         .appendTo($container);
 
@@ -508,7 +509,7 @@
 
     function _dataStandardizer(data) {
       var ret = {},
-        standardKeysInOrder = ['_id', 'event_id', 'id', 'type', 'title', 'name', 'date', 'value', 'orderValue', 'max', 'note'],
+        standardKeysInOrder = ['_id', 'event_id', 'id', 'type', 'title', 'name', 'date', 'value', 'orderValue', 'max', 'note', 'comment'],
         dataType = data.type,
         dataKey,
         valKey,
