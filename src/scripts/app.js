@@ -438,7 +438,6 @@
       $container.append('&nbsp;');
 
       var $comment = $('<span />')
-        .val(data.note || '')
         .addClass('comment')
         .appendTo($container);
 
@@ -475,6 +474,7 @@
         }
       })
       $textareaContent.appendTo($noteContainer);
+      $textareaContent.trigger('change');
 
       $inputField.change(function (event) {
         var data = $item.data(),
@@ -675,6 +675,7 @@
     disableSaveButton();
     addFormListener();
     addBasketListener();
+    setSaveButtonStatus();
 
     return this;
   }
