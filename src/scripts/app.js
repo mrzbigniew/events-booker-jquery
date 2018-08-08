@@ -667,15 +667,18 @@
       $basket.trigger('basketchange');
     }
 
+    function determineSaveButtonState() {
+      setSaveButtonStatus();
+    }
+
     initItems();
     initAddAllAttractionRoomsButton();
     initAddAllRoomsButton();
     addLWEvent();
     addSaveButtonEvent();
-    disableSaveButton();
     addFormListener();
     addBasketListener();
-    setSaveButtonStatus();
+    determineSaveButtonState();
 
     return this;
   }
